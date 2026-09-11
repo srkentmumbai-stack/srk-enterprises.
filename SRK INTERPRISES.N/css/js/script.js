@@ -94,3 +94,58 @@ if (contactForm) {
 }
 
 console.log('🚀 SRK ENTERPRISES Website Loaded Successfully!');
+// ===== FAQ ACCORDION =====
+document.querySelectorAll('.faq-question').forEach(question => {
+    question.addEventListener('click', () => {
+        const faqItem = question.parentElement;
+        faqItem.classList.toggle('active');
+    });
+});
+
+// ===== GALLERY LIGHTBOX =====
+document.querySelectorAll('.gallery-item').forEach(item => {
+    item.addEventListener('click', () => {
+        const img = item.querySelector('img');
+        const lightbox = document.createElement('div');
+        lightbox.style.cssText = `
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            cursor: pointer;
+        `;
+        const imgElement = document.createElement('img');
+        imgElement.src = img.src;
+        imgElement.style.cssText = 'max-width: 90%; max-height: 90%; border-radius: 10px;';
+        lightbox.appendChild(imgElement);
+        document.body.appendChild(lightbox);
+        
+        lightbox.addEventListener('click', () => {
+            document.body.removeChild(lightbox);
+        });
+    });
+});
+
+// ===== BOOKING FORM =====
+const bookingForm = document.querySelector('.booking-form form');
+if (bookingForm) {
+    bookingForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('bname').value;
+        const phone = document.getElementById('bphone').value;
+        const service = document.getElementById('bservice').value;
+        const date = document.getElementById('bdate').value;
+        const time = document.getElementById('btime').value;
+        
+        const message = `Hello SRK ENTERPRISES!%0A%0A*Booking Request*%0A%0AName: ${name}%0APhone: ${phone}%0AService: ${service}%0ADate: ${date}%0ATime: ${time}`;
+        const whatsappURL = `https://wa.me/919372618205?text=${message}`;
+        
+        alert('Thank you ' + name + '! Aapki booking request bheji ja rahi hai WhatsApp par.');
+        window.open(whatsappURL, '_blank');
+        this.reset();
+    });
+}
